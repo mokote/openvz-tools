@@ -32,7 +32,7 @@ OPENVZ_BASE_URL="http://download.openvz.org/kernel/branches"
 declare -A opts
 declare -A KERNELINFO
 KERNELINFO["base"]="2.6.32"
-KERNELINFO["ovzname"]="042stab057.1"
+KERNELINFO["ovzname"]="042stab059.7"
 KERNELINFO["rhelid"]="6"
 KERNELINFO["rhelbranch"]="rhel6-2.6.32"
 KERNELINFO["arch"]="x86_64"
