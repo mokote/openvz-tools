@@ -12,7 +12,10 @@ if [ -z "$1" ] ; then
     echo "Usage: $0 <arch> <path>";
     echo "<arch> should be i386 or amd64"
     echo "<path> default to /tmp"
-    echo "example to run: $0 i386 /var/tmp"
+    echo "you can set MIRROR variable which will override hardcoded one"
+    echo "examples to run:"
+    echo "$0 i386 /var/tmp"
+    echo "MIRROR=http://mirror.yandex.ru/ $0 amd64 /var/tmp"
     exit 1
 fi
 
@@ -24,7 +27,7 @@ fi
 VZ="/var/lib/vz"
 RELEASE="squeeze"
 REPOS="main contrib non-free"
-MIRROR="http://ftp.de.debian.org"
+MIRROR=${MIRROR:-"http://ftp.de.debian.org"} #allowing override from the shell
 MINBASE="netbase,net-tools,ifupdown,procps,locales,nano,iputils-ping,sudo,less,vim-nox,tcpdump,tcpflow,mc,iptraf,psmisc,zip,unzip,bzip2,openssh-server,telnet,dialog"
 ARCH="$1"
 #MY_SSH_KEYS[1]="ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAIEAsOPDZ+dZ9h3WVXZjU0S9x8412ZifCRYA0dZVW/uUH8ZyuboKxkQe91R0UAPP8LMl5UgqiXeajkA9q0nBeFhwfJUI7qphiMM0fNrfDH/BEzXCcvQC8II5AtnLwQvFis9F0zEiplju6nUiyBzOUpQyFsgl4wfaNLcJgxnJXHs05xc= rsa-key-20101024"
@@ -249,6 +252,11 @@ find $VE/var/cache/debconf/ -type f -name \*-old -delete
 #rm -rf $VE/etc/init.d/mountoverflowtmp
 
 ### compress image
-( cd $VE && tar --numeric-owner --one-file-system -czf "$VZ/template/cache/debian-6.0.5-$ARCH-minimal.tar.gz" . )
+( cd $VE && tar --numeric-owner --one-file-system -czf "$VZ/template/cache/debian-6.0.6-$ARCH-minimal.tar.gz" . )
+if [ $? -eq 0 ];then
+    echo "template creation complete, new template can be found in $VZ/template/cache/"
+else
+    echo "template creation failed ;("
+fi
 
 
