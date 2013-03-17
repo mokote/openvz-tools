@@ -289,6 +289,8 @@ CMD="fakeroot make-kpkg --jobs $cpucount --initrd --arch_in_name --append-to-ver
 echo -e "\n"
 echo "using next command to create package:"
 echo "$CMD"
+#measuring time taken
+starttime=$SECONDS
 sh -c "$CMD"
 build_result=$?
 if [[ $build_result -ne 0 ]];then
@@ -296,3 +298,7 @@ if [[ $build_result -ne 0 ]];then
 else
     echo "build succeeded, debian packages may be found in ${opts["builddir"]}"
 fi
+stoptime=$SECONDS
+tdiff=$(($stoptime - $starttime))
+echo "time taken: $tdiff seconds"
+
