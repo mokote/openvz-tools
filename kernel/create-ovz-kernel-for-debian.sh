@@ -32,7 +32,7 @@ OPENVZ_BASE_URL="http://download.openvz.org/kernel/branches"
 declare -A opts
 declare -A KERNELINFO
 KERNELINFO["base"]="2.6.32"
-KERNELINFO["ovzname"]="042stab106.4"
+KERNELINFO["ovzname"]="042stab106.6"
 KERNELINFO["rhelid"]="6"
 KERNELINFO["rhelbranch"]="rhel6-2.6.32"
 KERNELINFO["arch"]="x86_64"
@@ -50,16 +50,16 @@ print_usage() {
     echo "Usage: $PROGNAME [-h] [-B <base>] [-O <ovzname>] [-R <rhelid>] [-b <rhelbranch>] [-A <arch>] [-L <localname>] [-D <builddir>]"
     echo ""
     echo "-h - show this help"
-    echo "-B <base> - specifies base (vanilla) kernel version to use, currently this is 2.6.32."
+    echo "-B <base> - specifies base (vanilla) kernel version to use, currently this is ${KERNELINFO["base"]}."
     echo "-O <ovzname> - specifies version for kernel patch which openvz guys have. Default is: ${KERNELINFO["ovzname"]}"
     echo "-R <rhelid> - specifies rhel version id, now latest rhel is 6, previous was 5."
-    echo "-b <rhelbranch> - specifies rhel kernel branch, for now should be rhel6-2.6.32, for rhel 5 should be something like rhel5-2.6.18."
+    echo "-b <rhelbranch> - specifies rhel kernel branch, for rhel 6 should be rhel6-2.6.32, for rhel 5 should be something like rhel5-2.6.18."
     echo "-A <arch> - specifies processor architecture to use. For now applyed only for config downloading, as building for i386 almost has no reasons. Default is: ${KERNELINFO["arch"]}"
     echo "-L <localname> - specifies string appended to package, this will allow to distinguish your custom kernel from mirads of others. Highly recommended to be specified by hand, if missed will be set to 2nd level domain or hostname. For this machine defaults to \"${hpart}\" ."
     echo "-D <builddir> - specifies directory where to do kernel builds, as it may require some space, like 10-15GB. Defaults to $BUILDDIR ."
     echo ""
     echo ""
-    echo "As default options should be sane, you may need to change <localname> parameter."
+    echo "Default options should be sane, you may need to change <localname> parameter and may be <builddir>."
 }
 
 print_help() {
