@@ -90,8 +90,6 @@ chroot $VE sh -c "ln -sf /proc/mounts /etc/mtab"
 
 echo "APT::Install-Recommends \"false\";" > $VE/etc/apt/apt.conf.d/00InstallRecommends
 chmod 700 $VE/root
-#TODO - doesn't work
-#sed -i -e "/getty/d" $VE/etc/inittab
 echo "disabling getty-static.service"
 chroot $VE sh -c "systemctl mask getty-static.service && systemctl disable getty@tty2.service"
 #not needed anymore
