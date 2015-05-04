@@ -91,15 +91,16 @@ chroot $VE sh -c "ln -sf /proc/mounts /etc/mtab"
 echo "APT::Install-Recommends \"false\";" > $VE/etc/apt/apt.conf.d/00InstallRecommends
 chmod 700 $VE/root
 #TODO - doesn't work
-sed -i -e "/getty/d" $VE/etc/inittab
+#sed -i -e "/getty/d" $VE/etc/inittab
+echo "disabling getty-static.service"
+chroot $VE sh -c "systemctl mask getty-static.service"
 #not needed anymore
 #sed -i -e "s:RAMRUN=no:RAMRUN=yes:g" $VE/etc/default/rcS
 #not needed anymore - default is yes
 #sed -i -e "s:RAMLOCK=no:RAMLOCK=yes:g" $VE/etc/default/rcS
-#TODO - doesn't work
-echo "HWCLOCKACCESS=no" >> $VE/etc/default/rcS
-#TODO - doesn't work
-echo "ulimit -s 1024" > $VE/etc/lsb-base-logging.sh
+echo "HWCLOCKACCESS=no" >> $VE/etc/default/hwclock
+#looks like this is now not needed as
+# openvz uses --ram/--swap for overall memory management (if properly configured) and doesn't count shared memory separataly
 
 #looks like this is now not needed as
 #1) defaults are sane
@@ -216,10 +217,12 @@ cat << EOF > $VE/etc/init.d/ssh_gen_host_keys
 [ -f /usr/bin/ssh-keygen ] || exit 0
 ssh-keygen -f /etc/ssh/ssh_host_rsa_key -t rsa -N ""
 ssh-keygen -f /etc/ssh/ssh_host_dsa_key -t dsa -N ""
+ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -t ecdsa -N ""
+ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -t ed25519 -N ""
+
 insserv -r /etc/init.d/ssh_gen_host_keys
 rm -f \$0
 EOF
-
 chmod 755 $VE/etc/init.d/ssh_gen_host_keys
 chroot $VE sh -c "insserv /etc/init.d/ssh_gen_host_keys"
 
