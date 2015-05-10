@@ -165,7 +165,7 @@ echo "checking requirements..."
 #checking packages
 do_exit=0
 for i in $NEEDPACKAGES;do
-    dpkg -p "$i" 1>/dev/null 2>&1
+    dpkg -L "$i" 1>/dev/null 2>&1
     if [ $? -ne 0 ];then
         echo "missing package $i"
         do_exit=1
