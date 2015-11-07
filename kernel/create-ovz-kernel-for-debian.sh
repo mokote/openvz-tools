@@ -23,7 +23,7 @@
 BUILDDIR="/usr/src"
 
 #building tools, like make-kpkg
-NEEDPACKAGES="build-essential kernel-package fakeroot"
+NEEDPACKAGES="build-essential kernel-package fakeroot eatmydata"
 
 #kernel.org url for vanilla kernel
 KERNEL_BASE_URL="http://www.kernel.org/pub/linux/kernel/v2.6"
@@ -220,7 +220,7 @@ if [ -d "./${kernel_name}" ];then
 fi
 
 #unpacking archive
-tar -xf "${kernel_name}.tar.bz2"
+eatmydata tar -xf "${kernel_name}.tar.bz2"
 if [ $? -ne 0 ];then #failed
     echo "unpacking failed, exiting"
     exit 1
@@ -244,7 +244,7 @@ if ! [ -f "$patch_filename" ];then
         echo "download patch from $patch_url failed, exiting"
         exit 1
     fi
-    gzip -d "$patch_filename"
+    eatmydata gzip -d "$patch_filename"
     if [ $? -ne 0 ];then #failed
         echo "unzip of patch failed, exiting"
         exit 1
@@ -285,7 +285,7 @@ cp ../"$config_filename" .config
 #compiling
 #how much cpu we have?
 cpucount=$(grep -cw ^processor /proc/cpuinfo)
-CMD="fakeroot make-kpkg --jobs $cpucount --initrd --arch_in_name --append-to-version -${opts["ovzname"]}-el${opts["rhelid"]}-openvz --revision ${opts["base"]}~${opts["localname"]} kernel_image kernel_source kernel_headers"
+CMD="fakeroot eatmydata make-kpkg --jobs $cpucount --initrd --arch_in_name --append-to-version -${opts["ovzname"]}-el${opts["rhelid"]}-openvz --revision ${opts["base"]}~${opts["localname"]} kernel_image kernel_source kernel_headers"
 echo -e "\n"
 echo "using next command to create package:"
 echo "$CMD"
