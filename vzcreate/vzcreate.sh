@@ -1,5 +1,8 @@
 #!/bin/bash
-vzconfig=vzcreate.conf
+
+mydir=$(dirname $0)
+vzconfig="$mydir/vzcreate.conf"
+#vzconfig=vzcreate.conf
 
 
 ARGS=5
