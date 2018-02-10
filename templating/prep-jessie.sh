@@ -1,6 +1,6 @@
 #!/bin/bash
 # Copyright © 2090 Alexey Maximov <amax@mail.ru>
-# Copyright © 2014-2015 Roman Ovchinnikov <coolthecold@gmail.com>
+# Copyright © 2014-2016 Roman Ovchinnikov <coolthecold@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the BSD License
@@ -263,7 +263,7 @@ find $VE/var/cache/debconf/ -type f -name \*-old -delete
 #rm -rf $VE/etc/init.d/mountoverflowtmp
 
 ### compress image
-( cd $VE && tar --numeric-owner --one-file-system -czf "$VZ/template/cache/debian-8.0-$ARCH-minimal.tar.gz" . )
+( cd $VE && tar --numeric-owner --one-file-system -czf "$VZ/template/cache/debian-8.10-$ARCH-minimal.tar.gz" . )
 if [ $? -eq 0 ];then
     echo "template creation complete, new template can be found in $VZ/template/cache/"
 else
